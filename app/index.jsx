@@ -1,13 +1,12 @@
-import { Text, Pressable, View } from "react-native";
-import { Link } from "expo-router";
+import { Redirect } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
+
 export default function Index() {
-  return (
-    <View>
-      <Link asChild href={'/login'}>
-        <Pressable>
-          <Text>Ir a la pantalla de Login</Text>
-        </Pressable>
-      </Link>
-    </View>
-  );
+  const { isSignedIn } = useAuth();
+
+  if (isSignedIn) {
+    return <Redirect href="/home" />;
+  }
+
+  return <Redirect href="/login" />;
 }
